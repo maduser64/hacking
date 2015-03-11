@@ -4,7 +4,7 @@
 #
 Name     : hacking
 Version  : 0.10.1
-Release  : 2
+Release  : 3
 URL      : http://tarballs.openstack.org/hacking/hacking-0.10.1.tar.gz
 Source0  : http://tarballs.openstack.org/hacking/hacking-0.10.1.tar.gz
 Summary  : OpenStack Hacking Guideline Enforcement
@@ -12,8 +12,11 @@ Group    : Development/Tools
 License  : Apache-2.0
 Requires: hacking-python
 BuildRequires : pbr
+BuildRequires : pbr-python
 BuildRequires : pip
+BuildRequires : pip-python
 BuildRequires : python-dev
+BuildRequires : python3-dev
 BuildRequires : setuptools
 
 %description
@@ -34,11 +37,14 @@ python components for the hacking package.
 %setup -q -n hacking-0.10.1
 
 %build
-%{__python} setup.py build
+python3 setup.py build
 
 %install
 rm -rf %{buildroot}
-%{__python} setup.py install --root=%{buildroot}
+python3 setup.py install --root=%{buildroot}
+python3 setup.py clean
+python setup.py build
+python setup.py install --root=%{buildroot}
 
 %files
 %defattr(-,root,root,-)
