@@ -4,20 +4,46 @@
 #
 Name     : hacking
 Version  : 0.10.1
-Release  : 4
+Release  : 5
 URL      : http://tarballs.openstack.org/hacking/hacking-0.10.1.tar.gz
 Source0  : http://tarballs.openstack.org/hacking/hacking-0.10.1.tar.gz
 Summary  : OpenStack Hacking Guideline Enforcement
 Group    : Development/Tools
 License  : Apache-2.0
 Requires: hacking-python
+BuildRequires : Jinja2
+BuildRequires : Pygments
+BuildRequires : Sphinx
+BuildRequires : coverage
+BuildRequires : discover
+BuildRequires : docutils
+BuildRequires : eventlet
+BuildRequires : extras
+BuildRequires : fixtures
+BuildRequires : flake8
+BuildRequires : greenlet
+BuildRequires : linecache2-python
+BuildRequires : markupsafe-python
+BuildRequires : mccabe
+BuildRequires : mock-python
+BuildRequires : oslosphinx
 BuildRequires : pbr
-BuildRequires : pbr-python
+BuildRequires : pep8
 BuildRequires : pip
-BuildRequires : pip-python
+BuildRequires : pyflakes
 BuildRequires : python-dev
+BuildRequires : python-mimeparse
+BuildRequires : python-subunit-python
 BuildRequires : python3-dev
+BuildRequires : requests-python
 BuildRequires : setuptools
+BuildRequires : six
+BuildRequires : testrepository
+BuildRequires : testscenarios
+BuildRequires : testtools
+BuildRequires : traceback2
+BuildRequires : unittest2
+Patch1: unlock-pep8.patch
 
 %description
 Introduction
@@ -35,11 +61,16 @@ python components for the hacking package.
 
 %prep
 %setup -q -n hacking-0.10.1
+%patch1 -p1
 
 %build
 python2 setup.py build -b py2
 python3 setup.py build -b py3
 
+%check
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+python2 setup.py test
 %install
 rm -rf %{buildroot}
 python2 setup.py build -b py2 install --root=%{buildroot}
