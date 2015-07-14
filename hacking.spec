@@ -4,7 +4,7 @@
 #
 Name     : hacking
 Version  : 0.10.1
-Release  : 6
+Release  : 7
 URL      : http://tarballs.openstack.org/hacking/hacking-0.10.1.tar.gz
 Source0  : http://tarballs.openstack.org/hacking/hacking-0.10.1.tar.gz
 Summary  : OpenStack Hacking Guideline Enforcement
@@ -25,14 +25,17 @@ BuildRequires : greenlet
 BuildRequires : linecache2-python
 BuildRequires : markupsafe-python
 BuildRequires : mccabe
-BuildRequires : mock-python
 BuildRequires : oslosphinx
 BuildRequires : pbr
 BuildRequires : pep8
 BuildRequires : pip
+BuildRequires : pluggy
+BuildRequires : py-python
 BuildRequires : pyflakes
+BuildRequires : pytest
 BuildRequires : python-dev
 BuildRequires : python-mimeparse
+BuildRequires : python-mock
 BuildRequires : python-subunit-python
 BuildRequires : python3-dev
 BuildRequires : requests-python
@@ -41,8 +44,10 @@ BuildRequires : six
 BuildRequires : testrepository
 BuildRequires : testscenarios
 BuildRequires : testtools
+BuildRequires : tox
 BuildRequires : traceback2
 BuildRequires : unittest2
+BuildRequires : virtualenv
 Patch1: unlock-pep8.patch
 
 %description
@@ -70,6 +75,7 @@ python3 setup.py build -b py3
 %check
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 python2 setup.py test
 %install
 rm -rf %{buildroot}
