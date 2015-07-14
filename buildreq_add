@@ -12,7 +12,7 @@ testrepository
 oslosphinx
 Sphinx
 python-subunit-python
-mock-python
+python-mock
 fixtures
 discover
 coverage
